@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>ygwg-admin</title>
+    <link rel="stylesheet" th:href="@{/ref/bootstrap/bootstrap.css}">
+    <script type="text/javascript" th:src="@{/ref/bootstrap/bootstrap.min.css}"></script>
+    <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+    <script type="text/javascript" th:src="@{/js/index.js}"></script>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <!-- 引入样式 -->
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <!-- 引入组件库 -->
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+    <style>
+        .input-p{
+            font-size:14px;
+        }
+    </style>
+
+</head>
+<body>
+
+
+<div class="col-sm-12">
+    <div class="col-sm-4 text-center" style="border:1px solid #2b2d2f">
+        <strong>增加会员</strong><hr>
+        <form id="form1" method="post" action="/ygwg-admin/member/register"  name="form1" onsubmit="return check1()" style="margin-top: 5px;margin-bottom: 5px" >
+            <lable class="input-p">name:  </lable><input  class="input-p" name="memberName" id="memberName" placeholder="enter name" ><br>
+            <lable class="input-p">email:  </lable><input class="input-p" name="memberEmail" id="memberEmail" placeholder="enter email"><br>
+            <lable class="input-p">affiliation:  </lable><input class="input-p" name="affiliation" id="affiliation" placeholder="enter affiliation"><br>
+            <lable class="input-p">country:  </lable><input class="input-p" name="country" id="country" placeholder="enter country"><br>
+            <p id="memberId" th:text="${member}" style="color: red"></p><br>
+            <input class="input-p" type="submit" value="注册会员" >
+        </form>
+    </div>
+
+    <div class="col-sm-8 text-center " style="border: 1px solid #2b2d2f;">
+        <form method="post" action="/ygwg-admin/member/find" onsubmit="return check2()" >
+            <strong>查询会员</strong><br><hr><br>
+            <select name="find-select" id="find-select">
+                <option class="input-p" >Name</option>
+                <option class="input-p">Email</option>
+                <option class="input-p">RegisterTime</option>
+                <option class="input-p">Affiliation</option>
+                <option class="input-p">Country</option>
+            </select>
+            <input class="input-p" name="find-value" id="find-value" placeholder="enter value">
+            <input type="submit" value="查询" class="input-p">
+            <table  style="align:center;margin-top: 30px" class="table text-center input-p">
+                <tr >
+                    <th class="text-center">ID</th>
+                    <th class="text-center">MemberName</th>
+                    <th class="text-center">MemberEmail</th>
+                    <th class="text-center">registertime</th>
+                    <th class="text-center">Affiliation</th>
+                    <th class="text-center">Country</th>
+                    <th class="text-center">DueTime</th>
+                </tr>
+                <tr th:each="c, State : ${memberList}">
+                    <td th:text="${c.memberId}"></td>
+                    <td th:text="${c.memberName}"></td>
+                    <td th:text="${c.memberEmail}"></td>
+                    <td th:text="${c.registerTime}"></td>
+                    <td th:text="${c.affiliation}"></td>
+                    <td th:text="${c.country}"></td>
+                    <td th:text="${c.dueTime}"></td>
+                </tr>
+            </table>
+
+        </form>
+    </div>
+</div>
+
+<div class="col-sm-12">
+    <div class="col-sm-8 text-center" style="border: 1px solid #2b2d2f;margin-top: 30px">
+        <strong>删除会员</strong><hr>
+        <form method="post" action="/ygwg-admin/member/delete" onsubmit="return check3()" style="margin-top: 5px;margin-bottom: 5px">
+            <lable>MemberId</lable>
+            <input id="deleteId" name="deleteId" class="input-p" placeholder="enter MemberId"><br>
+            <p  th:text="${deleteinfo}" style="color: red;"></p><br>
+            <input type="submit" value="删除会员" class="input-p">
+            <table  style="align:center;margin-top: 30px" class="table text-center input-p">
+                <tr >
+                    <th class="text-center">ID</th>
+                    <th class="text-center">MemberName</th>
+                    <th class="text-center">MemberEmail</th>
+                    <th class="text-center">registertime</th>
+                    <th class="text-center">Affiliation</th>
+                    <th class="text-center">Country</th>
+                    <th class="text-center">DueTime</th>
+                </tr>
+                <tr th:each="c, State : ${memberDelete}">
+                    <td th:text="${c.memberId}"></td>
+                    <td th:text="${c.memberName}"></td>
+                    <td th:text="${c.memberEmail}"></td>
+                    <td th:text="${c.registerTime}"></td>
+                    <td th:text="${c.affiliation}"></td>
+                    <td th:text="${c.country}"></td>
+                    <td th:text="${c.dueTime}"></td>
+                </tr>
+            </table>
+
+        </form>
+
+
+
+    </div>
+
+
+
+</div>
+
+
+
+
+
+
+
+</body>
+</html>

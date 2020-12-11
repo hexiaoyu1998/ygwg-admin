@@ -1,0 +1,17 @@
+spring:
+  data:
+    mongodb:
+      uri: mongodb://localhost:59349/Ygwguser
+  thymeleaf:
+    cache: false
+
+  devtools:
+    livereload:
+      enabled: true
+
+server:
+  port: 8081
+  servlet:
+    context-path: /ygwg-admin
+
+
