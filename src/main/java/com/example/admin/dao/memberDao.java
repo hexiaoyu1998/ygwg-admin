@@ -27,6 +27,8 @@ public interface memberDao {
 
     List<MemberEntity> findByCountry(String country);
 
+    List<MemberEntity> outputFindAll();
+
 
 
 

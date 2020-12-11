@@ -8,10 +8,6 @@
     <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
     <script type="text/javascript" th:src="@{/js/index.js}"></script>
     <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <!-- 引入样式 -->
-    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
-    <!-- 引入组件库 -->
-    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
     <style>
         .input-p{
             font-size:14px;
@@ -22,7 +18,7 @@
 <body>
 
 
-<div class="col-sm-12">
+<div class="col-sm-12" >
     <div class="col-sm-4 text-center" style="border:1px solid #2b2d2f">
         <strong>增加会员</strong><hr>
         <form id="form1" method="post" action="/ygwg-admin/member/register"  name="form1" onsubmit="return check1()" style="margin-top: 5px;margin-bottom: 5px" >
@@ -70,46 +66,57 @@
 
         </form>
     </div>
+
 </div>
 
-<div class="col-sm-12">
-    <div class="col-sm-8 text-center" style="border: 1px solid #2b2d2f;margin-top: 30px">
-        <strong>删除会员</strong><hr>
-        <form method="post" action="/ygwg-admin/member/delete" onsubmit="return check3()" style="margin-top: 5px;margin-bottom: 5px">
-            <lable>MemberId</lable>
-            <input id="deleteId" name="deleteId" class="input-p" placeholder="enter MemberId"><br>
-            <p  th:text="${deleteinfo}" style="color: red;"></p><br>
-            <input type="submit" value="删除会员" class="input-p">
-            <table  style="align:center;margin-top: 30px" class="table text-center input-p">
-                <tr >
-                    <th class="text-center">ID</th>
-                    <th class="text-center">MemberName</th>
-                    <th class="text-center">MemberEmail</th>
-                    <th class="text-center">registertime</th>
-                    <th class="text-center">Affiliation</th>
-                    <th class="text-center">Country</th>
-                    <th class="text-center">DueTime</th>
-                </tr>
-                <tr th:each="c, State : ${memberDelete}">
-                    <td th:text="${c.memberId}"></td>
-                    <td th:text="${c.memberName}"></td>
-                    <td th:text="${c.memberEmail}"></td>
-                    <td th:text="${c.registerTime}"></td>
-                    <td th:text="${c.affiliation}"></td>
-                    <td th:text="${c.country}"></td>
-                    <td th:text="${c.dueTime}"></td>
-                </tr>
-            </table>
+<div class="col-sm-12" style="margin-top: 3%" >
 
-        </form>
+    <div class="col-sm-4 text-center" style="border:1px solid #2b2d2f">
+        <strong>导出功能</strong>
+        <hr>
+        <p style="color: red" id="outmeassage"></p>
+        <button id="outall">导出全部会员</button>
+        <br>
+        <br>
+    </div>
 
+    <div class="col-sm-8 text-center"  style="border: 1px solid #2b2d2f;">
+        <div class="col-sm-8 text-center" >
+            <strong>删除会员</strong><hr>
+            <form method="post" action="/ygwg-admin/member/delete" onsubmit="return check3()" >
+                <lable>MemberId</lable>
+                <input id="deleteId" name="deleteId" class="input-p" placeholder="enter MemberId"><br>
+                <p  th:text="${deleteinfo}" style="color: red;"></p><br>
+                <input type="submit" value="删除会员" class="input-p">
+                <table  style="align:center;margin-top: 30px" class="table text-center input-p">
+                    <tr >
+                        <th class="text-center">ID</th>
+                        <th class="text-center">MemberName</th>
+                        <th class="text-center">MemberEmail</th>
+                        <th class="text-center">registertime</th>
+                        <th class="text-center">Affiliation</th>
+                        <th class="text-center">Country</th>
+                        <th class="text-center">DueTime</th>
+                    </tr>
+                    <tr th:each="c, State : ${memberDelete}">
+                        <td th:text="${c.memberId}"></td>
+                        <td th:text="${c.memberName}"></td>
+                        <td th:text="${c.memberEmail}"></td>
+                        <td th:text="${c.registerTime}"></td>
+                        <td th:text="${c.affiliation}"></td>
+                        <td th:text="${c.country}"></td>
+                        <td th:text="${c.dueTime}"></td>
+                    </tr>
+                </table>
 
-
+            </form>
+        </div>
     </div>
 
 
-
 </div>
+
+
 
 
 
@@ -118,4 +125,13 @@
 
 
 </body>
+<script>
+    $("#outall").click(function (){
+
+        $.get("/ygwg-admin/function/outexcel",function (result){
+            $("#outmeassage").text(result);
+        })
+
+    })
+</script>
 </html>

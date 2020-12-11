@@ -142,6 +142,11 @@ public class memberDaoImpl implements memberDao{
         return memberEntitity;
     }
 
+    @Override
+    public List<MemberEntity> outputFindAll() {
+       return mongoTemplate.findAll(MemberEntity.class);
+    }
+
     public static void main(String[] args) {
         LocalDate date = LocalDate.now(); // get the current date
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");

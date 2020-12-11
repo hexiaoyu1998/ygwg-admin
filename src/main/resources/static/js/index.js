@@ -18,8 +18,19 @@
             alert("输入国别");
             return false;
         }
+        else if(!isEmail(memberEmail)){
+            alert("请输入正确的邮箱格式");
+            return false;
+        }
 
         return true;
+    }
+
+    function isEmail(str) {
+        if (!/^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/.test(str)) {
+            return false; }
+        else {
+            return true;}
     }
 
     function isEmpty(str) {
@@ -44,6 +55,8 @@
     }
     return true;
   }
+
+
 
 
 
