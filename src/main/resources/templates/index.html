@@ -5,8 +5,9 @@
     <title>ygwg-admin</title>
     <link rel="stylesheet" th:href="@{/ref/bootstrap/bootstrap.css}">
     <script type="text/javascript" th:src="@{/ref/bootstrap/bootstrap.min.css}"></script>
-    <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
     <script type="text/javascript" th:src="@{/js/index.js}"></script>
+    <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+
     <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <style>
         .input-p{
@@ -126,12 +127,48 @@
 
 </body>
 <script>
+    const base64 = s => window.btoa(unescape(encodeURIComponent(s)));
     $("#outall").click(function (){
 
-        $.get("/ygwg-admin/function/outexcel",function (result){
-            $("#outmeassage").text(result);
+        $.get("/ygwg-admin/function/outexcel",function (list){
+            const jsonData = list;
+            // 列标题
+            let str = '<tr><td>memberId</td><td>memberName</td><td>memberEmail</td><td>registerTime</td><td>affiliation</td><td>country</td><td>dueTime</td><td>isDue</td></tr>';
+            // 循环遍历，每行加入tr标签，每个单元格加td标签
+            for(let i = 0 ; i < jsonData.length ; i++ ){
+                str+='<tr>';
+                for(const key in jsonData[i]){
+                    console.log(key);
+                    // 增加\t为了不让表格显示科学计数法或者其他格式
+                    str+=`<td>${ jsonData[i][key] + '\t'}</td>`;
+                }
+                str+='</tr>';
+            }
+            // Worksheet名
+            const worksheet = 'Sheet1'
+            const uri = 'data:application/vnd.ms-excel;base64,';
+
+            // 下载的表格模板数据
+            const template = `<html xmlns:o="urn:schemas-microsoft-com:office:office"
+        xmlns:x="urn:schemas-microsoft-com:office:excel"
+        xmlns="http://www.w3.org/TR/REC-html40">
+        <head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet>
+        <x:Name>${worksheet}</x:Name>
+        <x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet>
+        </x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]-->
+        </head><body><table>${str}</table></body></html>`;
+            // 下载模板
+            window.location.href = uri + base64(template);
+
+
+
+
+
+
+
         })
 
     })
+
 </script>
 </html>
